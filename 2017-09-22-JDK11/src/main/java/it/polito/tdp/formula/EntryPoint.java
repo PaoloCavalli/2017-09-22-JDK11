@@ -1,7 +1,7 @@
-package it.polito.tdp;
+package it.polito.tdp.formula;
 
 import javafx.application.Application;
-import static javafx.application.Application.launch;
+
 
 import it.polito.tdp.model.Model;
 import javafx.fxml.FXMLLoader;
@@ -18,7 +18,6 @@ public class EntryPoint extends Application {
     	Parent root = loader.load();
         Scene scene = new Scene(root);
          
-        
         Model model = new Model();
         FXMLController controller = loader.getController();
         controller.setModel(model);

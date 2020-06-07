@@ -1,4 +1,4 @@
-package it.polito.tdp;
+package it.polito.tdp.formula;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -63,6 +63,6 @@ public class FXMLController {
 
     }
     public void setModel(Model model) {
-    	
+    	this.model=model;
     }
 }
