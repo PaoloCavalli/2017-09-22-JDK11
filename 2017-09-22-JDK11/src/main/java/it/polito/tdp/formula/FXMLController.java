@@ -1,8 +1,10 @@
 package it.polito.tdp.formula;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
+import it.polito.tdp.model.Adiacenza;
 import it.polito.tdp.model.Model;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -21,7 +23,7 @@ public class FXMLController {
     private URL location;
 
     @FXML
-    private ComboBox<?> boxAnno;
+    private ComboBox<Integer> boxAnno;
 
     @FXML
     private Button btnSelezionaStagione;
@@ -43,8 +45,24 @@ public class FXMLController {
 
     @FXML
     void doSelezionaStagione(ActionEvent event) {
-
-    }
+    	txtResult.clear();
+    	Integer anno = this.boxAnno.getValue();
+        if(anno== null ) {
+       	 txtResult.appendText("Seleziona una stagione");
+       	 return;
+        }
+        this.model.creaGrafo(anno);
+        txtResult.appendText(String.format("Grafo creato con %d vertici e %d archi \n", this.model.nVertici(), this.model.nArchi()));
+        List<Adiacenza> massimi = this.model.getMassimi();
+        if(!massimi.isEmpty()) {
+        	for(Adiacenza a : massimi) {
+        	txtResult.appendText(a.getR1().toString()+" / "+ a.getR2().toString()+"- Peso Massimo:"+ a.getPeso().toString() +"\n");
+        	}
+        	}else {
+        Adiacenza massimo = this.model.getArcoMax();
+        txtResult.appendText(massimo.getR1().toString()+" / "+massimo.getR2().toString()+"- Peso Massimo"+ massimo.getPeso().toString()+"\n");	
+        	}
+        }
 
     @FXML
     void doSimulaGara(ActionEvent event) {
@@ -64,5 +82,6 @@ public class FXMLController {
     }
     public void setModel(Model model) {
     	this.model=model;
+    	this.boxAnno.getItems().addAll(model.getAnni());
     }
 }
